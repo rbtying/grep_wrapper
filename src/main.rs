@@ -4,7 +4,7 @@ use std::path::{Path, PathBuf};
 
 use clap::{App, Arg};
 use colored::Colorize;
-use regex::Regex;
+use regex::{Regex, RegexBuilder};
 
 #[derive(Clone, Copy, Debug)]
 struct GrepLike<'a> {
@@ -93,9 +93,12 @@ fn main() {
         .get_matches();
     let extra_prefix = matches.value_of("prefix");
     let check_exists = matches.value_of("check_exists").is_some();
-    let highlight_regex = matches
-        .value_of("highlight")
-        .map(|h| Regex::new(&h).unwrap());
+    let highlight_regex = matches.value_of("highlight").map(|h| {
+        RegexBuilder::new(&h)
+            .case_insensitive(true)
+            .build()
+            .unwrap()
+    });
     let line_regex =
         Regex::new(r#"(?:[^:/]+/?([^:]+):)?([^:]+)(?::(\d+))?(?::(\d+))?:\s*(.*)"#).unwrap();
 
