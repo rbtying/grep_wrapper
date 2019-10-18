@@ -100,7 +100,7 @@ fn main() {
             .unwrap()
     });
     let line_regex =
-        Regex::new(r#"(?:[^:/]+/?([^:]+):)?([^:]+)(?::(\d+))?(?::(\d+))?:\s*(.*)"#).unwrap();
+        Regex::new(r#"(?:[^:/]+/?([^:]+):)?([^:]+)(?::(\d+))(?::(\d+))?:\s*(.*)"#).unwrap();
 
     let cwd = std::env::current_dir().unwrap();
 
